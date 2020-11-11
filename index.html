@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Importando fuentes -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+    <!-- Fin de importacón de fuentes -->
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Creación de NAVBAR -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            Situación mundial COVID-19
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" id="botonVolver" href="#">Home<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link d-none" id="botonSituacionChile" href="#">Situación de Chile <span
+                            class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a id="botonIniciarSesion" class="nav-link" data-toggle="modal" data-target="#logInModal"
+                        href="#">Iniciar
+                        Sesión<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a id="botonLogOut" class="nav-link d-none" data-toggle="modal" data-target="#logOutModal"
+                        href="#">Cerrar
+                        Sesión<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Fin de bloque NAVABAR -->
+    <div class="container" id="containerId">
+        <!-- Creación de Tabla -->
+        <!-- Parte del código que se ocultará al mostrar situación de chile. -->
+        <div id="toHideOnLogIn">
+            <!-- Grafico Charts de paises -->
+            <div class="w-100">
+                <canvas id="canvasPaises"></canvas>
+            </div>
+            <br>
+            <!-- Final de bloque Charts -->
+
+            <!-- Creación de tabla -->
+            <div class="text-center">
+                <h2><b>Detalle de casos por paises</b></h2> <br>
+                <table class=" table table-bordered justify-content-center table-hover table-sm align-self-center">
+                    <thead>
+                        <tr>
+                            <th class="thead-ligh" id="pais">Pais</th>
+                            <th>Confirmados</th>
+                            <th>Muertes</th>
+                            <th>Recuperados</th>
+                            <th>Activos</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCasos">
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- Fin de bloque Tabla -->
+
+            <!-- Creación Modal detalle paises -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <!-- Gráfico de torta dentro de modal -->
+                            <div id="graficaModal" style="width: 100%">
+                                <canvas id="canvasModal"></canvas>
+                            </div>
+                            <!-- Fin de bloque torta dentro de modal -->
+
+                        </div>
+                        <div id="footerDetalle" class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin bloque Modal detalle paises -->
+
+            <!-- Creación Modal para inicio de sesión -->
+            <div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-dark" id="headerModalLogIn">
+                            <h5 class="modal-title" id="exampleModalLabel">Inicio de sesión</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4"><label>Correo Electrónico</label></div>
+                                <div class="col-md-8"><input value="Telly.Hoeger@billy.biz" type="email"
+                                        class="form-control" id="email" aria-describedby="emailHelp" /></div>
+                                <div class="col-md-4"><label>Contraseña</label></div>
+                                <div class="col-md-8"><input value="secret" type="password" class="form-control"
+                                        id="password"></div>
+                            </div> <br>
+                            <button type="button" id="botonLogIn" class="btn btn-primary"
+                                data-dismiss="modal">Ingresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin de bloque Modal para inicio de sesión -->
+        </div>
+    </div>
+    <!-- Fin del llógica del bloque que se ocultará al mostrar situación de chile. -->
+
+    <!-- Mensaje que se muestra mientras carga situación de Chile -->
+    <div id="mensajeCargaSituacionChile" class="d-none">
+        <div>
+            <h3>Generando gráfico Situación Chile</h3>
+            <div class="d-flex justify-content-center">
+                <div id="spinnerGraficoPaises" class="spinner-grow text-success"> </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin de bloque mientras carga situación de Chile -->
+
+    <!-- Creación de gráfico Situación de Chile -->
+    <div id="divSituacionChile" class="container" style="width:100%;">
+        <canvas id="canvasSituacionChile">
+        </canvas>
+    </div>
+    <!-- Fin de gráfico Situación de Chile -->
+
+    <!-- Importación de scripts para funcionamiento de página -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <!-- Script de Charts -->
+    <script src="https://www.chartjs.org/dist/2.9.4/Chart.min.js"></script>
+    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+    <!-- Final importación scripts de Charts -->
+    <!-- Importación de scripts para funcionamiento de página -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+        crossorigin="anonymous"></script>
+    <!-- Scripts creados por -->
+    <script src="./assets/scripts.js"></script>
+    <!-- Fin de importación de scripts para funcionamiento de página -->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+* {
+    font-family: 'Karla', sans-serif;
+    color: black
+}
+
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+#pais {
+    width: 20%;
+}
+
+.modal-header {
+    color: white;
+    background-color: gray;
+}
+
+th {
+    background-color: gray;
+}
+
+.navbar {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+#containerId {
+    padding-top: 60px;
+}
+
+#mensajeCargaSituacionChile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px);
+}
